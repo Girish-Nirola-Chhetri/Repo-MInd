@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Getting Started
 
-## Getting Started
+## step1: creat a next app
+    >> pnpm create next-app@latest .
+    >> To run : pnpm dev or npm run dev
+    >> open on http://localhost:3000
 
-First, run the development server:
+## step2: get database url neon db
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## step3: set up drizzle
+    >> pnpm add drizzle-orm@rc pg dotenv
+    >> pnpm add -D drizzle-kit@rc tsx @types/pg
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    >> creaet drizzle.config.ts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## step4: connect drizzle to postgress
+    >> db/index.ts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## step6: Get github oAuth credentials
+    >> settings -> developer settings -> oAuth App -> new oAuthApp 
+    >> home page url , 
+    >> Authorization callback url or Redirect URL
+        >> http://localhost:3000/api/auth/callback/github
+        
+    >> get client id and client secret
 
-## Learn More
+## step5: Better-Auth and oAuth
+    >> pnpm add better-auth @better-auth/drizzle-adapter
+    >> in root lib/auth.ts -> configure better auth 
+    >> add service providers( github google , user email password )
+    >> generate schema ( pnpm dlx auth@latest generate )        -> this will generate the auth-schema.ts
 
-To learn more about Next.js, take a look at the following resources:
+    >> pnpm drizzle-kit generate
+    >> onom drizzle-kit migrate
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    >> add teh schema in the auth.ts ( import * as authSchame from ....)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## step6: add an endpoint for betterauth to communicate with the applcation
+    >> api/auth/[..all]/path.ts         // ..all -> catch alll comming here
 
-## Deploy on Vercel
+## add sahdcn
+    >> pnpm dlx shadcn@latest init      // init shadcn
+    >> add components pnpm dlx shadcn@latest add button
+    
+## create the sign in oage.
+    >> get callback form search params
+    >> create the sign in page
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    so far the oAuth setup os done and ready for sign in with github
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+# step 2.add dark theme 
+    >> install next-themes
+    >> creaet theme provider 
+    >> wrap the root layout in theme provider
+
+
