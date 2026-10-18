@@ -1,12 +1,18 @@
-import React from 'react'
+import { ModeToggle } from "@/components/utility/mode-toggle"
+import { UserMenu } from "@/features/dashboard/components/user-menu"
 
 const Dashboard = () => {
-  return (
-    <div>
-      Dashboard
-      
-    </div>
-  )
+    
+    return (
+        <div>
+            Dashboard
+            <ModeToggle />
+
+        
+
+            <UserMenu />
+        </div>
+    )
 }
 
 export default Dashboard

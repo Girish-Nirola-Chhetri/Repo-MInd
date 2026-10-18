@@ -67,3 +67,11 @@ export async function requireUnAuth( redirectTo = DEFAULT_CALLBACK_URL ) {
     return session;
 }
 
+
+export async function signOut( redirectTo = SIGNIN_PATH ) {
+    await auth.api.signOut({
+        headers: await headers()
+    })
+
+    redirect( redirectTo )
+}

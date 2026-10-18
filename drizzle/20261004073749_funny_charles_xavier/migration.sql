@@ -1,0 +1,2 @@
+ALTER TABLE "github_installation" ALTER COLUMN "installation_id" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "github_installation" ADD CONSTRAINT "github_installation_installation_id_key" UNIQUE("installation_id");

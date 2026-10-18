@@ -1,0 +1,1 @@
+ALTER TABLE "github_installation" ADD CONSTRAINT "github_installation_user_id_key" UNIQUE("user_id");

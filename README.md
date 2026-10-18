@@ -49,10 +49,43 @@
     so far the oAuth setup os done and ready for sign in with github
 
 
+# implememnt protected roures
+    >> check if session exists and user goes to public pages redirect back to dashboard
+    >> if sessionn does not exists and user go to protected routes attach the path and callback to url and redirect to sign-in
+    >> after sign in redirect to the attached path and callback
+
+
 
 # step 2.add dark theme 
     >> install next-themes
     >> creaet theme provider 
     >> wrap the root layout in theme provider
+
+
+
+
+# create gitub app
+    from github developer settings create github app and get appid, secret and private key
+
+## installation 
+    >> lib/github-app.ts 
+        >> create a github app using {App} from octokit and private key
+        >> creaet a installation url from where app can be installed
+        const url = new URL("https://github.com/apps/repomind-github-app/installations/new");
+        url.searchParams.set("state", userId)       // can use a diff state and save a mapping of state and the user
+
+## create connection
+    >> connection where you call the install function and get the installation url and when user clicks on connect giyhub in frontend thisis invoked
+
+    >> once app is installed it return to the setup url /api/github/callback
+    >> in callback returns installation id
+
+    >> using octokit get details of the installation
+    >> save to db
+
+# create disconnection function  ad other helper function
+    >> disconnects gthub app and deletes from db
+    >> getInstallationIdByUser getUserByInstallationId and all
+    
 
 

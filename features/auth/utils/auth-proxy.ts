@@ -43,5 +43,4 @@ export async function authProxy ( req: NextRequest ) {
 
     return NextResponse.next();
 
-
 }
