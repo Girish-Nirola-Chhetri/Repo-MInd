@@ -1,6 +1,9 @@
 import { integer, pgTable, text, boolean, timestamp, uniqueIndex} from "drizzle-orm/pg-core";
 import { user } from "./auth-schema";
 
+
+export type INDEX_STATUS = 'pending' | 'processing' | 'completed' | 'failed'
+
 export const repoTable = pgTable('repositorys', {
     id: text('id').primaryKey(),
     userId: text('user_id').notNull().references(()=> user.id, { onDelete: 'cascade'}),
@@ -15,8 +18,14 @@ export const repoTable = pgTable('repositorys', {
     isPrivate: boolean('is_private').notNull(),
     htmlUrl: text('html_url').notNull(),
 
+
     stars: integer('stars').notNull().default(0),
     language: text('language'),
+
+    indexStatus: text('index_status').notNull().default('pending'),
+    lastIndexedAt: timestamp('last_indexed_at'),
+    lastIndexedCommitSha: text('last_indexed_commit_Sha'),
+    indexError: text('index_error'),
 
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull()

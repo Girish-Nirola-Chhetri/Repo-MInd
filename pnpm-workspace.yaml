@@ -1,4 +1,6 @@
 allowBuilds:
   esbuild: false
+  protobufjs: false
   sharp: false
+  tree-sitter: false
   unrs-resolver: false

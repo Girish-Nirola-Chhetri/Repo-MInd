@@ -12,13 +12,20 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@ai-sdk/google": "^4.0.107",
     "@base-ui/react": "^1.8.0",
     "@better-auth/drizzle-adapter": "^1.7.6",
+    "@pinecone-database/pinecone": "^9.0.0",
+    "@xberg-io/tree-sitter-language-pack": "^1.22.1",
+    "@xberg-io/tree-sitter-language-pack-wasm": "^1.22.1",
+    "@xberg-io/tree-sitter-language-pack-win32-x64-msvc": "^1.22.1",
+    "ai": "^7.0.155",
     "better-auth": "^1.7.6",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.4.0",
     "dotenv": "^18.0.4",
     "drizzle-orm": "1.0.0-rc.4",
+    "inngest": "^4.25.0",
     "lucide-react": "^1.49.0",
     "next": "16.3.6",
     "next-themes": "^0.4.6",
@@ -27,6 +34,7 @@
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "shadcn": "^4.21.0",
+    "tree-sitter": "^0.25.1",
     "tw-animate-css": "^1.4.0"
   },
   "devDependencies": {

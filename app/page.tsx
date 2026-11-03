@@ -1,10 +1,10 @@
+import { Navbar } from "@/components/home/navbat"
 
-export default function Home() {
-    return(
-        <div>
-            <h1>
-                Home page
-            </h1>
-        </div>
+export default function HomePage() {
+    return (
+        <main className="min-h-screen bg-[#0B0D12] text-white">
+            <Navbar />
+            {/* Hero section comes next */}
+        </main>
     )
 }

@@ -89,3 +89,8 @@
     
 
 
+
+# run command
+1: pnpm dev
+2: pnpm dlx inngest-cli@latest dev
+3: pnpm db:studio   
