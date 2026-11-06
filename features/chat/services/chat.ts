@@ -1,10 +1,18 @@
 
 import { db } from "@/db"
-import { saveChatMessage } from "./messages"
+import { saveChatMessage, getChatMessages } from "./messages"
 import { chatConversationTable } from "@/db/schema/chat"
 import { eq } from "drizzle-orm"
 import { repoTable } from "@/db/schema/repo-schema"
 import { ChatRepo } from "@/features/retrival/services/chat"
+
+
+
+type ChatProps = {
+    conversationId: string
+    query: string
+}
+
 
 export async function getRepositoryId(conversationId: string) {
     if (!conversationId.trim()) {
@@ -30,10 +38,7 @@ export async function getRepositoryId(conversationId: string) {
     return conversation.repoId
 }
 
-type ChatProps = {
-    conversationId: string
-    query: string
-}
+
 
 function generateChatTitle(query: string) {
     const normalized = query.trim().replace(/\s+/g, " ")
@@ -42,6 +47,8 @@ function generateChatTitle(query: string) {
 
     return normalized.slice(0, 37).trimEnd() + "..."
 }
+
+
 
 async function updateConversationTitle(
     conversationId: string,
@@ -57,12 +64,20 @@ async function updateConversationTitle(
     return title
 }
 
+
+
+
 export async function chat({ conversationId, query }: ChatProps) {
     const repoId = await getRepositoryId(conversationId)
-
-    if (!repoId) {
+    if (!repoId) 
         throw new Error("Could not get repository")
-    }
+
+    const history = await getChatMessages({ conversationId })
+
+    const formattedHistory = history.map((message) => ({
+        role: message.role as "user" | "assistant",
+        content: message.content ?? "",
+    }))
 
     // Save user message
     const userMessage = await saveChatMessage({
@@ -70,6 +85,7 @@ export async function chat({ conversationId, query }: ChatProps) {
         role: "user",
         content: query,
     })
+
 
     // Update title only if this is the first message
     const [conversation] = await db
@@ -84,11 +100,14 @@ export async function chat({ conversationId, query }: ChatProps) {
         await updateConversationTitle(conversationId, query)
     }
 
+
     // Generate response
     const response = await ChatRepo({
         repoId,
         query,
+        history: formattedHistory.slice( -12 )
     })
+
 
     // Save assistant response
     const assistantMessage = await saveChatMessage({
@@ -97,9 +116,15 @@ export async function chat({ conversationId, query }: ChatProps) {
         content: response,
     })
 
+    const title =
+        conversation?.title === "New Chat"
+            ? await updateConversationTitle(conversationId, query)
+            : conversation?.title ?? generateChatTitle(query)
+
     return {
         userMessage,
         assistantMessage,
-        title: conversation?.title ?? generateChatTitle(query),
+        title,
     }
+    
 }

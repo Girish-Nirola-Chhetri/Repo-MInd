@@ -1,18 +1,18 @@
-import { generateText } from "ai"
+import { generateText, type ModelMessage } from "ai"
 import { model } from "@/lib/llm";
 
 type GenerateResponseProps = {
     systemMessage: string
-    userMessage: string
+    messages: ModelMessage[]
 }
 
 export async function generateResponse(
-    { systemMessage, userMessage }: GenerateResponseProps
+    { systemMessage, messages }: GenerateResponseProps
 ) {
     const {text} = await generateText({
         model: model,
         system: systemMessage,
-        prompt: userMessage
+        messages
         
     })
 

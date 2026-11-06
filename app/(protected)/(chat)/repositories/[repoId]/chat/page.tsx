@@ -40,7 +40,7 @@ export default async function RepositoryChatPage(
     return (
         <div className="h-[calc(100dvh-4rem)]">
             <ChatWorkspace
-            repoId = { repo.id }
+                repoId = { repo.id }
                 repoName = { repo.repoName }
                 conversations={conversations}
                 messages={ messages }
